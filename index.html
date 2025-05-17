@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lulu's Space Story</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 2;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+      background-color: #f9f9ff;
+    }
+    .line {
+      margin-bottom: 10px;
+    }
+    .word {
+      cursor: pointer;
+      background-color: #eef;
+      padding: 2px 4px;
+      margin: 0 2px;
+      border-radius: 4px;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+    .word:hover {
+      background-color: #cce;
+    }
+    .sentence {
+      cursor: pointer;
+      background-color: #ddf;
+      padding: 4px;
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 10px;
+      transition: background-color 0.3s;
+    }
+    .sentence:hover {
+      background-color: #ccd;
+    }
+    .mode-toggle {
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      background-color: #88f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lulu's Space Story</h1>
+  <button class="mode-toggle" onclick="toggleMode()">Mode: Word</button>
+  <div id="story-container"></div>
+
+  <script>
+    const lines = [
+      "Lulu looks up at the sky.",
+      "Lulu sees the stars.",
+      "Lulu sees the moon.",
+      "Lulu says, I want to visit the planets.",
+      "Her cat Mimi says, Meow! Lulu smiles, “Lets go!”",
+      "Lulu builds a rocket. Mimi helps.",
+      "They pack a broom.",
+      "They pack a can.",
+      "They pack some cookies.",
+      "Are you ready, Mimi? “Meow!” says Mimi. “Lets go!”",
+      "They fly past clouds.",
+      "They fly past stars.",
+      "Lulu flies past the moon.",
+      "Lulu says, We are going to visit the planets!",
+      "The rocket goes faster. The rocket goes higher",
+      "Lulu sees a small, hot planet.",
+      "Hello, says Lulu. What is your name?",
+      "I am Mercury, says the planet. I am small. I am hot. I am dusty.",
+      "Lulu takes out her broom. Sweep, sweep, sweep!",
+      "She sweeps the dust. Mimi helps, too.",
+      "Now Mercury is clean. “Thank you,” says Mercury. “You are welcome,” says Lulu."
+    ];
+
+    let mode = "word";
+
+    const container = document.getElementById("story-container");
+
+    function renderStory() {
+      container.innerHTML = "";
+
+      lines.forEach(line => {
+        const lineDiv = document.createElement("div");
+
+        if (mode === "word") {
+          lineDiv.className = "line";
+          const words = line.split(/(\s+)/); // 保留空白
+          words.forEach(word => {
+            if (word.trim() === "") {
+              lineDiv.appendChild(document.createTextNode(word));
+            } else {
+              const span = document.createElement("span");
+              span.className = "word";
+              span.textContent = word;
+              span.addEventListener("click", () => speak(word));
+              lineDiv.appendChild(span);
+            }
+          });
+        } else {
+          lineDiv.className = "sentence";
+          lineDiv.textContent = line;
+          lineDiv.addEventListener("click", () => speak(line));
+        }
+
+        container.appendChild(lineDiv);
+      });
+    }
+
+    function toggleMode() {
+      mode = (mode === "word") ? "sentence" : "word";
+      document.querySelector(".mode-toggle").textContent = `Mode: ${mode.charAt(0).toUpperCase() + mode.slice(1)}`;
+      renderStory();
+    }
+
+    function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = "en-US";
+      utter.rate = 0.9;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utter);
+    }
+
+    renderStory();
+  </script>
+</body>
+</html>
