@@ -2,134 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lulu's Space Story</title>
+  <title>Lulu's Space Adventure</title>
   <style>
     body {
-      font-family: sans-serif;
-      line-height: 2;
-      padding: 2rem;
-      max-width: 700px;
-      margin: auto;
-      background-color: #f9f9ff;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      line-height: 1.8;
+      position: relative;
     }
     .line {
       margin-bottom: 10px;
-    }
-    .word {
       cursor: pointer;
-      background-color: #eef;
-      padding: 2px 4px;
-      margin: 0 2px;
-      border-radius: 4px;
-      display: inline-block;
-      transition: background-color 0.3s;
-    }
-    .word:hover {
-      background-color: #cce;
-    }
-    .sentence {
-      cursor: pointer;
-      background-color: #ddf;
-      padding: 4px;
-      border-radius: 6px;
-      display: block;
-      margin-bottom: 10px;
-      transition: background-color 0.3s;
-    }
-    .sentence:hover {
-      background-color: #ccd;
     }
     .mode-toggle {
       margin-bottom: 20px;
-      padding: 8px 12px;
-      background-color: #88f;
-      color: white;
+      padding: 10px;
+      background-color: #87ceeb;
       border: none;
-      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
-      font-size: 1rem;
+      border-radius: 5px;
+    }
+    audio {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Lulu's Space Story</h1>
-  <button class="mode-toggle" onclick="toggleMode()">Mode: Word</button>
-  <div id="story-container"></div>
+  <button class="mode-toggle" onclick="toggleMode()">目前模式：整句點讀</button>
+  <div id="text-container"></div>
+  <audio src="https://cdn.pixabay.com/download/audio/2023/03/30/audio_74a9647358.mp3?filename=exploration-143105.mp3" autoplay loop></audio>
 
   <script>
-    const lines = [
-      "Lulu looks up at the sky.",
-      "Lulu sees the stars.",
-      "Lulu sees the moon.",
-      "Lulu says, I want to visit the planets.",
-      "Her cat Mimi says, Meow! Lulu smiles, “Lets go!”",
-      "Lulu builds a rocket. Mimi helps.",
-      "They pack a broom.",
-      "They pack a can.",
-      "They pack some cookies.",
-      "Are you ready, Mimi? “Meow!” says Mimi. “Lets go!”",
-      "They fly past clouds.",
-      "They fly past stars.",
-      "Lulu flies past the moon.",
-      "Lulu says, We are going to visit the planets!",
-      "The rocket goes faster. The rocket goes higher",
-      "Lulu sees a small, hot planet.",
-      "Hello, says Lulu. What is your name?",
-      "I am Mercury, says the planet. I am small. I am hot. I am dusty.",
-      "Lulu takes out her broom. Sweep, sweep, sweep!",
-      "She sweeps the dust. Mimi helps, too.",
-      "Now Mercury is clean. “Thank you,” says Mercury. “You are welcome,” says Lulu."
-    ];
+    const text = `
+旁白:Lulu looks up at the sky.
+旁白:Lulu sees the stars.
+旁白:Lulu sees the moon.
+Lulu:I want to visit the planets.
+Mimi:Meow!
+Lulu:Lets go!
+旁白:Lulu builds a rocket. Mimi helps.
+旁白:They pack a broom.
+旁白:They pack a can.
+旁白:They pack some cookies.
+Lulu:Are you ready, Mimi?
+Mimi:Meow!
+Lulu:Lets go!
+旁白:They fly past clouds.
+旁白:They fly past stars.
+旁白:Lulu flies past the moon.
+Lulu:We are going to visit the planets!
+旁白:The rocket goes faster. The rocket goes higher
+旁白:Lulu sees a small, hot planet.
+Lulu:Hello. What is your name?
+旁白:I am Mercury. I am small. I am hot. I am dusty.
+旁白:Lulu takes out her broom. Sweep, sweep, sweep!
+旁白:She sweeps the dust. Mimi helps, too.
+旁白:Now Mercury is clean.
+旁白:Thank you,
+Lulu:You are welcome,
+Lulu:How big are you?
+旁白:My diameter is 4880km.
+旁白:Lulu flies to a red planet.
+Lulu:Hello. What is your name?
+旁白:I am Mars. I am red. I am rocky. I feel empty.
+旁白:Lulu takes out her watering can. Sprinkle, sprinkle, sprinkle!
+旁白:She plants flowers.
+旁白:She plants green vines.
+旁白:I like flowers.
+Lulu:Mars has flowers now. Mars is happy.
+Lulu:How big are you?
+旁白:My diameter is 6779km.
+Lulu:No wonder you look bigger than Mercury.
+旁白:Lulu sees a blue and green planet.
+Lulu:Hello. What is your name?
+旁白:I am Earth. I have trees. I have people. I feel tired.
+旁白:Lulu opens a book.
+旁白:She reads to Earth.
+旁白:Thank you, Lulu.
+Lulu:How big are you? You look bigger than Mars.
+旁白:My diameter is 12742km.
+Lulu:No wonder you look bigger than Mars.
+旁白:Lulu sees a giant planet.
+Lulu:Hello. What is your name?
+旁白:I am Jupiter, I am big. But I am messy.
+旁白:Lulu takes out her broom again. Sweep, sweep, sweep!
+旁白:She cleans the dust.
+旁白:Now Jupiter shines.
+旁白:Thank you.
+Lulu:You are welcome.
+Lulu:How big are you? You look bigger than Earth.
+旁白:My diameter is 139820.
+旁白:No wonder you look bigger than Earth.
+旁白:Lulu and Mimi say.
+旁白:Lulu flies far away.
+旁白:She finds a cold, blue planet.
+Lulu:Hello. What is your name?
+旁白:I am Neptune, I am cold. I am windy. I feel alone.
+旁白:Lulu gives Neptune a scarf. She plays music.
+Lulu:How big are you? You look bigger than Earth.
+旁白:My diameter is 49244.
+Lulu:No wonder you look bigger than Earth.
+旁白:Lulu sees a bright light.
+旁白:It is warm. It is huge.
+Lulu:Hello. What is your name?
+旁白:I am the Sun,I am not a planet. I am a star. I shine all day.
+旁白:Lulu opens her cookie box. She gives cookies to the Sun.
+旁白:Crunch, crunch, crunch!
+旁白:Mimi eats one too.
+旁白:Yummy!
+旁白:Thank you,
+Lulu:You are welcome,
+Lulu:It is time to go home.
+Lulu:Goodbye, Planets and Sun!
+`.trim();
 
-    let mode = "word";
+    let mode = "sentence";
+    const container = document.getElementById("text-container");
+    const lines = text.split("\n");
 
-    const container = document.getElementById("story-container");
-
-    function renderStory() {
+    function renderLines() {
       container.innerHTML = "";
-
-      lines.forEach(line => {
-        const lineDiv = document.createElement("div");
+      lines.forEach((line) => {
+        const role = line.split(":")[0];
+        const content = line.split(":")[1]?.trim() || "";
+        const div = document.createElement("div");
+        div.className = "line";
 
         if (mode === "word") {
-          lineDiv.className = "line";
-          const words = line.split(/(\s+)/); // 保留空白
-          words.forEach(word => {
-            if (word.trim() === "") {
-              lineDiv.appendChild(document.createTextNode(word));
-            } else {
-              const span = document.createElement("span");
-              span.className = "word";
-              span.textContent = word;
-              span.addEventListener("click", () => speak(word));
-              lineDiv.appendChild(span);
-            }
+          const words = content.split(" ");
+          words.forEach((word) => {
+            const span = document.createElement("span");
+            span.innerText = word;
+            span.style.marginRight = "6px";
+            span.style.cursor = "pointer";
+            span.addEventListener("click", () => speakText(word, role));
+            div.appendChild(span);
           });
         } else {
-          lineDiv.className = "sentence";
-          lineDiv.textContent = line;
-          lineDiv.addEventListener("click", () => speak(line));
+          div.innerText = content;
+          div.dataset.role = role;
+          div.dataset.text = content;
+          div.addEventListener("click", () => speakText(content, role));
         }
 
-        container.appendChild(lineDiv);
+        container.appendChild(div);
       });
     }
 
     function toggleMode() {
-      mode = (mode === "word") ? "sentence" : "word";
-      document.querySelector(".mode-toggle").textContent = `Mode: ${mode.charAt(0).toUpperCase() + mode.slice(1)}`;
-      renderStory();
+      mode = mode === "sentence" ? "word" : "sentence";
+      document.querySelector(".mode-toggle").innerText =
+        "目前模式：" + (mode === "sentence" ? "整句點讀" : "單字點讀");
+      renderLines();
     }
 
-    function speak(text) {
+    function speakText(text, role) {
       const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "en-US";
-      utter.rate = 0.9;
-      speechSynthesis.cancel();
-      speechSynthesis.speak(utter);
+      const voices = window.speechSynthesis.getVoices();
+      utter.voice = voices.find(v => v.name.includes("Female")) || voices[0];
+
+      utter.rate = 0.8;
+
+      if (role === "Mimi") {
+        utter.pitch = 2.0;
+      } else if (role === "Lulu") {
+        utter.pitch = 1.4;
+      } else {
+        utter.pitch = 1.0;
+      }
+
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utter);
     }
 
-    renderStory();
+    window.speechSynthesis.onvoiceschanged = () => {
+      renderLines();
+    };
   </script>
 </body>
 </html>
